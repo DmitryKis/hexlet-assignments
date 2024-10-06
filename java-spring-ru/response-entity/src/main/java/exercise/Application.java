@@ -3,6 +3,7 @@ package exercise;
 import exercise.model.Post;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,9 +29,9 @@ public class Application {
     }
 
     @PostMapping("/posts")
-    public ResponseEntity.BodyBuilder createPost(@RequestBody Post post) {
+    public ResponseEntity<Object> createPost(@RequestBody Post post) {
         posts.add(post);
-        return ResponseEntity.status(201);
+        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(post);
     }
 
     @GetMapping("/posts/{id}")
@@ -42,19 +43,24 @@ public class Application {
             return ResponseEntity.ok().body(post);
         }
     }
-    // END
 
     @PutMapping("/posts/{id}")
-    public ResponseEntity.BodyBuilder editPost(@PathVariable String id, @RequestBody Post data) {
+    public ResponseEntity<Object> editPost(@PathVariable String id, @RequestBody Post data) {
         var post = posts.stream().filter(p -> p.getId().equals(id)).findFirst();
         if (post.isPresent()) {
             var currentPost = post.get();
             currentPost.setId(data.getId());
             currentPost.setTitle(data.getTitle());
             currentPost.setBody(data.getBody());
-            return ResponseEntity.ok();
+            return ResponseEntity.ok().body(currentPost);
         } else {
-            return ResponseEntity.status(204);
+            return ResponseEntity.status(204).body(null);
         }
+    }
+    // END
+
+    @DeleteMapping("/posts/{id}")
+    public void destroy(@PathVariable String id) {
+        posts.removeIf(p -> p.getId().equals(id));
     }
 }
