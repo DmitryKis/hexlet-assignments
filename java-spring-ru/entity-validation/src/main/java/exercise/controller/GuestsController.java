@@ -48,10 +48,8 @@ public class GuestsController {
     // BEGIN
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public GuestDTO create(@RequestBody GuestCreateDTO createDTO){
-        var guest = guestMapper.map(createDTO);
-        guestRepository.save(guest);
-        return guestMapper.map(guest);
+    public GuestDTO create(@Valid @RequestBody GuestCreateDTO createDTO){
+        return guestMapper.map(guestRepository.save(guestMapper.map(createDTO)));
     }
     // END
 }

@@ -5,7 +5,6 @@ import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -21,7 +20,7 @@ public class GuestCreateDTO {
     @Email
     private String email;
 
-    @Pattern(regexp = "^[+]\\\\d{11,13}$")
+    @Pattern(regexp = "^[+]\\d{11,13}$")
     private String phoneNumber;
 
     @Pattern(regexp = "^\\d{4}$")

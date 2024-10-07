@@ -8,14 +8,12 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.format.annotation.NumberFormat;
 
 import java.time.LocalDate;
 
@@ -34,7 +32,7 @@ public class Guest {
     private long id;
 
     // BEGIN
-    @NotEmpty
+    @NotNull
     private String name;
 
     @Email
